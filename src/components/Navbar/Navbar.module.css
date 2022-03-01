@@ -3,6 +3,10 @@
     background-color: #ffe665;
 }
 
-.item a{
+.item{
     color: white;
+}
+
+.active {
+    color: black;
 }
