@@ -4,20 +4,20 @@ import MessageItem from "./MessageItem/MessageItem";
 
 
 const Dialogs = (props) => {
+
+    let dialogsElements = props.state.dialogs.map(d => <DialogItem name={d.name} id={d.id}/> );
+    let messagesElements = props.state.messages.map(m => <MessageItem message={m.message} id={m.id} />)
+
     return (
         <div>
             <div className={s.dialogs}>
 
                 <div className={s.dialogsItems}>
-                    <DialogItem name="User1" id="1"/>
-                    <DialogItem name="User2" id="2"/>
-                    <DialogItem name="User3" id="3"/>
+                    {dialogsElements}
                 </div>
 
                 <div className={s.messages}>
-                    <MessageItem message="Hi"/>
-                    <MessageItem message="How are you?"/>
-                    <MessageItem message="Wow?"/>
+                    {messagesElements}
                 </div>
 
             </div>
