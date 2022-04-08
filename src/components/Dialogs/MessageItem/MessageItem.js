@@ -1,8 +1,11 @@
 import s from './MessageItem.module.css';
+import * as React from "react";
 
 const MessageItem = (props) => {
     return (
-        <div className={s.message}>{props.message}</div>
+        <div>
+            <div className={s.message}>{props.message}</div>
+        </div>
     );
 };
 
