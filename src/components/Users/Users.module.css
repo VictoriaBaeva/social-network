@@ -8,3 +8,11 @@
     width: 70px;
     height: 70px;
 }
+
+.pageNumber {
+    display: flex;
+}
+
+.selectedPage {
+    font-weight: bold;
+}
