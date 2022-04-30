@@ -1,70 +1,53 @@
 import React from 'react';
 import styles from './Users.module.css';
-import * as axios from 'axios';
 import userPhoto from '../../assets/images/user.png';
 
-class Users extends React.Component {
+let Users = (props) => {
 
-    componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
-            this.props.setUsers(response.data.items);
-            this.props.setTotalUsersCount(response.data.totalCount);
-        });
+    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+
+    let pages = [];
+
+    for (let i = 1; i <= pagesCount; i++) {
+        pages.push(i);
     }
 
-    onPageChanged = (pageNumber) => {
-        this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
-            this.props.setUsers(response.data.items);
-        });
-    }
+    return (
+        <div>
 
-    render() {
-
-        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
-
-        let pages = [];
-
-        for (let i = 1; i <= pagesCount; i++) {
-            pages.push(i);
-        }
-
-        return (
-            <div>
-
-                <div className={styles.pageNumber}>
-                    {
-                        pages.map(p => <div className={this.props.currentPage === p && styles.selectedPage}
-                                            onClick={() => {this.onPageChanged(p)}}>{p}</div>)
-                    }
-                </div>
-
+            <div className={styles.pageNumber}>
                 {
-                    this.props.users.map(u =>
-                        <div className={styles.users} key={u.id}>
-                            <div>
-                                <img src={u.photos.small != null ? u.photos.small : userPhoto}
-                                     className={styles.usersPhoto} alt="user photo"/>
-                                <div>
-                                    <button
-                                        onClick={() => this.props.toggleFollow(u.id)}>{u.followed ? 'Followed' : 'UnFollowed'}</button>
-                                </div>
-                            </div>
-                            <div>
-                                <div>
-                                    <div>{u.name}</div>
-                                    <div>{u.status}</div>
-                                </div>
-                                <div>
-                                    <div>{'u.location.country'}</div>
-                                    <div>{'u.location.city'}</div>
-                                </div>
-                            </div>
-                        </div>)
+                    pages.map(p => <div className={props.currentPage === p && styles.selectedPage} onClick={() => {
+                        props.onPageChanged(p)
+                    }}>{p}</div>)
                 }
             </div>
-        )
-    }
+
+            {
+                props.users.map(u =>
+                    <div className={styles.users} key={u.id}>
+                        <div>
+                            <img src={u.photos.small != null ? u.photos.small : userPhoto}
+                                 className={styles.usersPhoto} alt="user photo"/>
+                            <div>
+                                <button
+                                    onClick={() => props.toggleFollow(u.id)}>{u.followed ? 'Followed' : 'UnFollowed'}</button>
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <div>{u.name}</div>
+                                <div>{u.status}</div>
+                            </div>
+                            <div>
+                                <div>{'u.location.country'}</div>
+                                <div>{'u.location.city'}</div>
+                            </div>
+                        </div>
+                    </div>)
+            }
+        </div>
+    )
 }
 
 export default Users;
