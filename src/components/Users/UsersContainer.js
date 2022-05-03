@@ -2,11 +2,11 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Users from './Users';
 import {
-    setCurrentPageAC,
-    setTotalUsersCountAC,
-    setUsersAC,
-    toggleFollowAC,
-    toggleIsFetchingAC
+    setCurrentPage,
+    setTotalUsersCount,
+    setUsers,
+    toggleFollow,
+    toggleIsFetching
 } from '../../redux/users-reducer';
 import * as axios from 'axios';
 import Preloader from "../common/Preloader/Preloader";
@@ -59,6 +59,7 @@ let mapStateToProps = (state) => {
     };
 };
 
+/*
 let mapDispatchToProps = (dispatch) => {
     return {
         toggleFollow: (userId) => {
@@ -78,5 +79,13 @@ let mapDispatchToProps = (dispatch) => {
         }
     };
 };
+*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+
+export default connect(mapStateToProps, {
+    toggleFollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsFetching
+})(UsersContainer);
