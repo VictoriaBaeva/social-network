@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import {NavLink} from "react-router-dom";
+import * as axios from "axios/index";
 
 let Users = (props) => {
 
@@ -34,7 +35,34 @@ let Users = (props) => {
                             </NavLink>
                             <div>
                                 <button
-                                    onClick={() => props.toggleFollow(u.id)}>{u.followed ? 'Followed' : 'UnFollowed'}</button>
+                                    onClick={() => {
+                                        if (u.followed) {
+                                            axios.delete(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`, {
+                                                withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "bdb3b2d0-9409-4abc-ab57-22897e9357a8"
+                                                }
+                                            })
+                                                .then(response => {
+                                                    if (response.data.resultCode == 0) {
+                                                        props.toggleFollow(u.id);
+                                                    }
+                                                })
+                                        } else {
+                                            axios.post(`https://social-network.samuraijs.com/api/1.0//follow/${u.id}`,{}, {
+                                                withCredentials: true,
+                                                headers: {
+                                                    "API-KEY": "bdb3b2d0-9409-4abc-ab57-22897e9357a8"
+                                                }
+                                            })
+                                                .then(response => {
+                                                    if (response.data.resultCode == 0) {
+                                                        props.toggleFollow(u.id);
+                                                    }
+                                                })
+                                        }
+                                    }
+                                    }>{u.followed ? 'Отписаться' : 'Подписаться'}</button>
                             </div>
                         </div>
                         <div>
