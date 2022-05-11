@@ -34,23 +34,27 @@ let Users = (props) => {
                                      className={styles.usersPhoto} alt="user photo"/>
                             </NavLink>
                             <div>
-                                <button
-                                    onClick={() => {
-                                        if (u.followed) {
-                                            usersAPI.deleteFromFriends(u.id).then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.toggleFollow(u.id);
-                                                }
-                                            })
-                                        } else {
-                                            usersAPI.addAsFriend(u.id).then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.toggleFollow(u.id);
-                                                }
-                                            })
+                                <button disabled={props.followingInProgress.includes(u.id)}
+                                        onClick={() => {
+                                            props.toggleFollowingInProgress(true, u.id);
+                                            if (u.followed) {
+                                                usersAPI.deleteFromFriends(u.id).then(data => {
+                                                    if (data.resultCode === 0) {
+                                                        props.toggleFollow(u.id);
+                                                    }
+                                                    props.toggleFollowingInProgress(false, u.id);
+                                                })
+                                            } else {
+                                                props.toggleFollowingInProgress(true, u.id);
+                                                usersAPI.addAsFriend(u.id).then(data => {
+                                                    if (data.resultCode === 0) {
+                                                        props.toggleFollow(u.id);
+                                                    }
+                                                    props.toggleFollowingInProgress(false, u.id);
+                                                })
+                                            }
                                         }
-                                    }
-                                    }>{u.followed ? 'Отписаться' : 'Подписаться'}</button>
+                                        }>{u.followed ? 'Отписаться' : 'Подписаться'}</button>
                             </div>
                         </div>
                         <div>
