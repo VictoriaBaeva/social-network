@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Users.module.css';
 import userPhoto from '../../assets/images/user.png';
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 let Users = (props) => {
 
@@ -36,22 +35,10 @@ let Users = (props) => {
                             <div>
                                 <button disabled={props.followingInProgress.includes(u.id)}
                                         onClick={() => {
-                                            props.toggleFollowingInProgress(true, u.id);
                                             if (u.followed) {
-                                                usersAPI.deleteFromFriends(u.id).then(data => {
-                                                    if (data.resultCode === 0) {
-                                                        props.toggleFollow(u.id);
-                                                    }
-                                                    props.toggleFollowingInProgress(false, u.id);
-                                                })
+                                                props.deleteFromFriends(u.id);
                                             } else {
-                                                props.toggleFollowingInProgress(true, u.id);
-                                                usersAPI.addAsFriend(u.id).then(data => {
-                                                    if (data.resultCode === 0) {
-                                                        props.toggleFollow(u.id);
-                                                    }
-                                                    props.toggleFollowingInProgress(false, u.id);
-                                                })
+                                                props.addAsFriend(u.id);
                                             }
                                         }
                                         }>{u.followed ? 'Отписаться' : 'Подписаться'}</button>
@@ -71,6 +58,6 @@ let Users = (props) => {
             }
         </div>
     )
-}
+};
 
 export default Users;
