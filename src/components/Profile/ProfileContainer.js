@@ -8,6 +8,7 @@ import {
 import Profile from "./Profile";
 import {getProfile} from "../../redux/profile-reducer";
 import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {compose} from "redux";
 
 
 
@@ -41,14 +42,16 @@ function withRouter(Component) {
     return ComponentWithRouterProp;
 }
 
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
-
 let mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
     }
 };
 
+export default compose(
+    connect(mapStateToProps, {getProfile}),
+    withRouter,
+    withAuthRedirect
+)(ProfileContainer);
 
-export default connect(mapStateToProps, {getProfile})(withRouter(AuthRedirectComponent));
 
