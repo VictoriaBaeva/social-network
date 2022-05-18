@@ -1,5 +1,6 @@
 import Preloader from "../../common/Preloader/Preloader";
 import React from "react";
+import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = (props) => {
 
@@ -10,14 +11,14 @@ const ProfileInfo = (props) => {
 
     return (
         <div>
-
-            <div>
+            {/*            <div>
                 <img src="https://miro.medium.com/max/1200/1*HsFBOH0ncItzjWJgLIuVIg.png" alt=""/>
-            </div>
-
+            </div>*/}
             <div>
                 <img src={props.profile.photos.large} alt=""/>
-                Info
+                <ProfileStatus status={props.status}
+                               getProfileStatus={props.getProfileStatus}
+                               updateProfileStatus={props.updateProfileStatus} />
             </div>
 
         </div>
