@@ -1,6 +1,6 @@
 import Header from "./Header";
 import React from "react";
-import {getAuth} from "../../redux/auth-reducer";
+import {getAuth, logout} from "../../redux/auth-reducer";
 import {connect} from 'react-redux';
 
 class HeaderContainer extends React.Component {
@@ -17,11 +17,11 @@ class HeaderContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        id: state.auth.id,
-        email: state.auth.email,
+        //id: state.auth.id,
+        //email: state.auth.email,
         login: state.auth.email,
         isLogin: state.auth.isLogin
     }
 };
 
-export default connect(mapStateToProps, {getAuth})(HeaderContainer);
+export default connect(mapStateToProps, {getAuth, logout})(HeaderContainer);
