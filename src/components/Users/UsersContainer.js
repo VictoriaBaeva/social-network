@@ -8,6 +8,8 @@ import {
     toggleIsFetching
 } from '../../redux/users-reducer';
 import Preloader from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/AuthRedirect";
+import {compose} from "redux";
 
 class UsersContainer extends React.Component {
 
@@ -47,10 +49,10 @@ let mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps, {
+export default compose(connect(mapStateToProps, {
     setCurrentPage,
     toggleIsFetching,
     getUsers,
     addAsFriend,
     deleteFromFriends
-})(UsersContainer);
+}))(UsersContainer);
