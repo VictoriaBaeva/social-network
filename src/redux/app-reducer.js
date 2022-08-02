@@ -1,6 +1,6 @@
 import {getAuth} from "./auth-reducer";
 
-const SET_INITIALIZED = 'SET-INITIALIZED';
+const SET_INITIALIZED = 'auth/SET-INITIALIZED';
 
 let initialState = {
     initialized: false

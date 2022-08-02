@@ -72,40 +72,33 @@ export const toggleFollowingInProgress = (followingInProgress, userId) => ({
     userId
 });
 
-export const getUsers = (page, pageSize) => {
-    return (dispatch) => {
-        dispatch(toggleIsFetching(true));
-        dispatch(setCurrentPage(page));
-        usersAPI.getUsers(page, pageSize).then(data => {
-            dispatch(toggleIsFetching(false));
-            dispatch(setUsers(data.items));
-            dispatch(setTotalUsersCount(data.totalCount));
-        });
-    }
+export const getUsers = (page, pageSize) => async (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    dispatch(setCurrentPage(page));
+    let response = await usersAPI.getUsers(page, pageSize);
+    dispatch(toggleIsFetching(false));
+    dispatch(setUsers(response.data.items));
+    dispatch(setTotalUsersCount(response.data.totalCount));
 };
 
-export const addAsFriend = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, userId));
-        usersAPI.addAsFriend(userId).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(toggleFollow(userId));
-            }
-            dispatch(toggleFollowingInProgress(false, userId));
-        })
+export const addAsFriend = (userId) => async (dispatch) => {
+    dispatch(toggleFollowingInProgress(true, userId));
+    let response = await usersAPI.addAsFriend(userId);
+    if (response.data.resultCode === 0) {
+        dispatch(toggleFollow(userId));
     }
+    dispatch(toggleFollowingInProgress(false, userId));
+
 };
 
-export const deleteFromFriends = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, userId));
-        usersAPI.deleteFromFriends(userId).then(data => {
-            if (data.resultCode === 0) {
-                dispatch(toggleFollow(userId));
-            }
-            dispatch(toggleFollowingInProgress(false, userId));
-        })
+export const deleteFromFriends = (userId) => async (dispatch) => {
+    dispatch(toggleFollowingInProgress(true, userId));
+    let response = await usersAPI.deleteFromFriends(userId);
+    if (response.data.resultCode === 0) {
+        dispatch(toggleFollow(userId));
     }
+    dispatch(toggleFollowingInProgress(false, userId));
+
 };
 
 export default usersReducer;

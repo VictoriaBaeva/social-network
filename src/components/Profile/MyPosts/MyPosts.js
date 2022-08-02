@@ -29,7 +29,7 @@ const NewPostReduxForm = reduxForm({
 })(NewPostForm);
 
 const MyPosts = (props) => {
-
+    console.log("render");
     let postsElements = props.posts.map(p => <Post message={p.message} key={p.id}/>);
 
     const addNewPost = (formData)=> {

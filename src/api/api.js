@@ -11,23 +11,23 @@ const instance = axios.create({
 
 export const usersAPI = {
     getUsers (currentPage = 1, pageSize = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data);
+        return instance.get(`users?page=${currentPage}&count=${pageSize}`);
     },
     addAsFriend (id) {
-        return instance.post(`/follow/${id}`).then(response => response.data);
+        return instance.post(`/follow/${id}`);
     },
     deleteFromFriends (id) {
-        return instance.delete(`/follow/${id}`).then(response => response.data);
+        return instance.delete(`/follow/${id}`);
     }
 };
 
 
 export const profileAPI = {
     getProfile (userId) {
-        return instance.get(`profile/${userId}`).then(response => response.data);
+        return instance.get(`profile/${userId}`);
     },
     getProfileStatus (userId) {
-        return instance.get(`profile/status/${userId}`).then(response => response.data);
+        return instance.get(`profile/status/${userId}`);
     },
     updateProfileStatus (status) {
         return instance.put(`profile/status`, {status});
@@ -36,12 +36,12 @@ export const profileAPI = {
 
 export const authAPI = {
     getAuth () {
-        return instance.get(`auth/me`).then(response => response.data);
+        return instance.get(`auth/me`);
     },
     login (email, password, rememberMe) {
-        return instance.post(`/auth/login`, {email, password, rememberMe}).then(response => response.data);
+        return instance.post(`/auth/login`, {email, password, rememberMe});
     },
     logout () {
-        return instance.delete(`/auth/login`).then(response => response.data);
+        return instance.delete(`/auth/login`);
     }
 };
